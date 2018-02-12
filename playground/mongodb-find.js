@@ -18,14 +18,12 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     // to array returns promise
     // add query between find obj brackets
     // when call by id needs to be new ObjectID('<id>')
-    // db.collection('Todos').find({
-    //     _id: new ObjectID("5a7d26e61faf79094a9dd4e4"
-    // )}).toArray().then((docs) => {
-    //     console.log('Todos');
-    //     console.log(JSON.stringify(docs, undefined, 2))
-    // }, (err) => {
-    //     console.log('Unable to connect :', err)
-    // });
+    db.collection('Todos').find().toArray().then((docs) => {
+        console.log('Todos');
+        console.log(JSON.stringify(docs, undefined, 2))
+    }, (err) => {
+        console.log('Unable to connect :', err)
+    });
 
     // use count function, then call promise
     // db.collection('Todos').find().count().then((count) => {
@@ -55,11 +53,11 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     // query array
     // https://docs.mongodb.com/manual/tutorial/query-arrays/
     // return red and blue items with no preferece to order
-    db.collection('Users').find({
-        colors: { $all: ["red", "blue"]}
-    }).toArray().then( (docs) => {
-        console.log(JSON.stringify(docs, undefined, 2))
-    })
+    // db.collection('Users').find({
+    //     colors: { $all: ["red", "blue"]}
+    // }).toArray().then( (docs) => {
+    //     console.log(JSON.stringify(docs, undefined, 2))
+    // })
 
 
 
