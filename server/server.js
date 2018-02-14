@@ -25,11 +25,12 @@ app.post('/todos', (req, res) => {
         text: req.body.text
     })
 
+    // save to db if successful send back doc if not send back error
+    // response doc will provide id and other properties not set by user
     todo.save().then( (doc) => {
         res.send(doc)
     }, (e) => {
         res.status(400).send(e)
-
     })
 
 })
@@ -39,4 +40,14 @@ app.listen(3000, () => {
     console.log('Started on port 3000')
 })
 
+
+app.get('/todos', (req, res) => {
+    //Ref Import model Todo
+    Todo.find().then( (todos) => {
+        res.send({todos})
+    }, (e) => {
+        res.status(400).send(e)
+    })
+
+})
 
