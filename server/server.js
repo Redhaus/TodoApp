@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 var { mongoose } = require('./db/mongoose')
 var { User } = require('./models/user')
 var { Todo } = require('./models/todo')
+var { ObjectID } = require('mongodb')
 
 // create app from express
 var app = express();
@@ -51,3 +52,32 @@ app.get('/todos', (req, res) => {
 
 })
 
+
+// get todos/123455
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id
+    // console.log(ObjectId)
+
+    if(!ObjectID.isValid(id)){
+        console.log('not valid bitch')
+    }
+
+    Todo.findById(id).then( (todo) => {
+        if(!todo){
+            return res.status(400).send('nope')
+        }
+        res.send({todo})
+    }, (e) => {
+        res.status(400).send('')
+    })
+    // req.params.value
+    // res.send(req.params)
+    
+})
+
+// valid id using is valid 
+// 404 if not
+
+// find by id
+// success
+// error
