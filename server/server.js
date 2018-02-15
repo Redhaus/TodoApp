@@ -2,6 +2,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 
+
 // import local mongoose db connect and data models
 var { mongoose } = require('./db/mongoose')
 var { User } = require('./models/user')
@@ -10,6 +11,7 @@ var { ObjectID } = require('mongodb')
 
 // create app from express
 var app = express();
+const port = process.env.PORT || 3000
 
 // setup Middleware that allows us to send json
 // and converts it to object, that is then attached to request object
@@ -37,8 +39,8 @@ app.post('/todos', (req, res) => {
 })
 
 // point app to server location
-app.listen(3000, () => {
-    console.log('Started on port 3000')
+app.listen(port, () => {
+    console.log(`Started on port ${port}`)
 })
 
 
