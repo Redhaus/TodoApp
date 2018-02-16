@@ -33,7 +33,7 @@ app.post('/todos', (req, res) => {
     todo.save().then( (doc) => {
         res.send(doc)
     }, (e) => {
-        res.status(400).send(e)
+        res.status(404).send(e)
     })
 
 })
@@ -49,7 +49,7 @@ app.get('/todos', (req, res) => {
     Todo.find().then( (todos) => {
         res.send({todos})
     }, (e) => {
-        res.status(400).send(e)
+        res.status(404).send(e)
     })
 
 })
@@ -66,15 +66,40 @@ app.get('/todos/:id', (req, res) => {
 
     Todo.findById(id).then( (todo) => {
         if(!todo){
-            return res.status(400).send('nope')
+            return res.status(404).send('nope')
         }
         res.send({todo})
     }, (e) => {
-        res.status(400).send('')
+        res.status(404).send('')
     })
     // req.params.value
     // res.send(req.params)
     
+})
+
+// setup rest endpoint for delete
+app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id; // get id from req.param
+
+    if(!ObjectID.isValid(id)){ // check if id is valid
+        return res.status(404).send('not valid')
+    }
+
+    //mongo delete by id function
+    Todo.findByIdAndRemove(id).then( (todo) => {
+        if(!todo){ //if not todo return 400 error
+            return res.status(404).send('not valid')
+        }
+
+        res.send({todo}) //if available respond with todo 
+
+    }).catch((e) => {
+      
+        res.status(404).send('') 
+       
+    })
+
+
 })
 
 // valid id using is valid 
